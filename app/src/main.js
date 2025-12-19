@@ -5,12 +5,24 @@ import "./style.css";
 
 const api = await fetch(
   "https://riskofrain2api.herokuapp.com/api/everyItem"
-).then((response) => {
-  console.log(response);
-});
+)
+//Below this line to the star is code that can console.log the api
+// .then((response) => {
+//   const apiurl = response.url;
+// });
+//*
+
+//Turn api url into variable: (Priority Zero, Get this to work)
+const apiurl = api.url
+
+//test:
+console.log(apiurl);
+
+//Run try catch function here: (Priority One, Use this as a guard to yourself)
 
 // console.log(api);
 
+//Inject function and other schtuff
 // function inject(item) {
 //   const test = document.querySelector(".test");
 //   test.insertAdjacentHTML(
