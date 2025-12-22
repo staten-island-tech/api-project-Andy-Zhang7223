@@ -40,3 +40,18 @@ function inject(item) {
 }
 
 apidata.forEach((item) => inject(item));
+
+async function Getitemdata() {
+  try {
+    const api = await fetch(
+      "https://riskofrain2api.herokuapp.com/api/everyItem"
+    );
+    if (api.status != 200) {
+      throw new Error(response);
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+Getitemdata();
