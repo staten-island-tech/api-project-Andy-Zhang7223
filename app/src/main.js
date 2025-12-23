@@ -30,8 +30,8 @@ function inject(item) {
   const test = document.querySelector(".test");
   test.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card">
-    <img class="itemimg" src=${item.itemImage} alt="">
+    `<div class="card" id="${item.itemName}">
+    <img class="itemimg" id="${item.itemName}img" src=${item.itemImage} alt="">
     <h1 class="itemname">${item.itemName}</h1>
     <h2 class="itemdescription">${item.description}</h2>
     <h2 class="itemscaling">${item.stackType}</h2>
@@ -41,17 +41,42 @@ function inject(item) {
 
 apidata.forEach((item) => inject(item));
 
-async function Getitemdata() {
+//Attempt on what you want to do:
+// function inject(item) {
+//   const test = document.querySelector(".test");
+//   test.insertAdjacentElement(
+//     "afterbegin",
+//     `<div class="card" id="${item.itemName}">
+//     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
+//     <a herf="">`
+//   )
+// }
+
+async function check() {
   try {
     const api = await fetch(
       "https://riskofrain2api.herokuapp.com/api/everyItem"
     );
     if (api.status != 200) {
-      throw new Error(response);
+      throw new Error(api);
     }
   } catch (error) {
     console.log(error.message);
   }
 }
 
-Getitemdata();
+check();
+
+// function correctaurelionitesblessing() {
+//   const wrongimglol = document.querySelector("#Aurelionite's Blessingimg");
+//   if (wrongimglol) {
+//     const rightimg =
+//       "https://riskofrain2.wiki.gg/images/Aurelionite%27s_Blessing.png?501841";
+//     const thediv = document.querySelector("#Aurelionite's Blessing");
+//     wrongimglol.remove();
+//     thediv.appendChild(rightimg);
+//   } else {
+//   }
+// }
+
+// correctaurelionitesblessing();
