@@ -26,31 +26,34 @@ console.log(apidata);
 // console.log(api);
 
 //Inject function and other schtuff
+// function inject(item) {
+//   const test = document.querySelector(".test");
+//   test.insertAdjacentHTML(
+//     "afterbegin",
+//     `<div class="card" id="${item.itemName}">
+//     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage} alt="">
+//     <h1 class="itemname">${item.itemName}</h1>
+//     <h2 class="itemdescription">${item.description}</h2>
+//     <h2 class="itemscaling">${item.stackType}</h2>
+//     </div>`
+//   );
+// }
+
+// apidata.forEach((item) => inject(item));
+
+//Attempt on what you want to do:
 function inject(item) {
   const test = document.querySelector(".test");
   test.insertAdjacentHTML(
     "afterbegin",
     `<div class="card" id="${item.itemName}">
-    <img class="itemimg" id="${item.itemName}img" src=${item.itemImage} alt="">
-    <h1 class="itemname">${item.itemName}</h1>
-    <h2 class="itemdescription">${item.description}</h2>
-    <h2 class="itemscaling">${item.stackType}</h2>
-    </div>`
+    <button onclick="prompt('test')">
+    <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
+    </button>`
   );
 }
 
 apidata.forEach((item) => inject(item));
-
-//Attempt on what you want to do:
-// function inject(item) {
-//   const test = document.querySelector(".test");
-//   test.insertAdjacentElement(
-//     "afterbegin",
-//     `<div class="card" id="${item.itemName}">
-//     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
-//     <a herf="">`
-//   )
-// }
 
 async function check() {
   try {
@@ -67,6 +70,7 @@ async function check() {
 
 check();
 
+//The image for Aurrlionite's Blessing is wrong, find a way to fix it(Or at least horribly fail trying to)
 // function correctaurelionitesblessing() {
 //   const wrongimglol = document.querySelector("#Aurelionite's Blessingimg");
 //   if (wrongimglol) {
