@@ -41,20 +41,7 @@ console.log(apidata);
 
 // apidata.forEach((item) => inject(item));
 
-//Attempt on what you want to do:
-function inject(item) {
-  const test = document.querySelector(".test");
-  test.insertAdjacentHTML(
-    "afterbegin",
-    `<div class="card" id="${item.itemName}">
-    <button onclick="prompt('test')">
-    <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
-    </button>`
-  );
-}
-
-apidata.forEach((item) => inject(item));
-
+//The try and catch function
 async function check() {
   try {
     const api = await fetch(
@@ -70,6 +57,20 @@ async function check() {
 
 check();
 
+//Attempt on what you want to do:
+function inject(item) {
+  const test = document.querySelector(".test");
+  test.insertAdjacentHTML(
+    "afterbegin",
+    `<div class="card" id="${item.itemName}">
+    <button class="Buttontoitem">
+    <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
+    </button>`
+  );
+}
+
+apidata.forEach((item) => inject(item));
+
 //The image for Aurrlionite's Blessing is wrong, find a way to fix it(Or at least horribly fail trying to)
 // function correctaurelionitesblessing() {
 //   const wrongimglol = document.querySelector("#Aurelionite's Blessingimg");
@@ -84,3 +85,24 @@ check();
 // }
 
 // correctaurelionitesblessing();
+
+//Button Listener to try and pull up data:
+function Getitemdata() {
+  const Buttontoitem = document.querySelectorAll(".Buttontoitem");
+  const ButtontoitemArray = Array.from(Buttontoitem);
+  ButtontoitemArray.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      const targetcard = button.closest(".itemimg");
+      ButtontoitemArray.forEach((button) => {
+        button.style.display = "none";
+      });
+      const test = document.querySelector(".test");
+      test.insertAdjacentHTML(
+        "afterbegin",
+        `<img class="itemimg" src="${targetcard}">`
+      );
+    });
+  });
+}
+
+Getitemdata();
