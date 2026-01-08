@@ -62,10 +62,11 @@ function inject(item) {
   const test = document.querySelector(".test");
   test.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" id="${item.itemName}">
+    `<div class="card" id="${item.itemName} data-category=${item.color}>
     <button class="Buttontoitem">
     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
-    </button>`
+    </button>
+    </div>`
   );
 }
 
@@ -85,6 +86,31 @@ apidata.forEach((item) => inject(item));
 // }
 
 // correctaurelionitesblessing();
+
+//Filtering THIS WASN'T REQUIRED BROOOOO
+// function filter(btncategory) {
+//   const cards = document.querySelectorAll(".card");
+//   cards.forEach((card) => {
+//     const cardCategory = card.getAttribute("data.category").toLowerCase();
+//     if (cardCategory === btncategory || btncategory === "all") {
+//       card.style.display = "";
+//     } else {
+//       card.style.display = "none";
+//     }
+//   });
+// }
+
+// function filterButtons() {
+//   const filterbuttons = document.querySelectorAll(".filter");
+//   filterbuttons.forEach((button) => {
+//     button.addEventListener("click", function (event) {
+//       const buttoncategory = event.target.textContent.toLowerCase();
+//       filter(buttoncategory);
+//     });
+//   });
+// }
+
+// filterButtons();
 
 //Button Listener to try and pull up data:
 function Getitemdata() {
