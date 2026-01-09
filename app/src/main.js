@@ -62,7 +62,7 @@ function inject(item) {
   const test = document.querySelector(".test");
   test.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" id="${item.itemName} data-category=${item.color}>
+    `<div class="card" id="${item.itemName}" data-category=${item.color}>
     <button class="Buttontoitem">
     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
     </button>
@@ -118,14 +118,22 @@ function Getitemdata() {
   const ButtontoitemArray = Array.from(Buttontoitem);
   ButtontoitemArray.forEach((button) => {
     button.addEventListener("click", function (event) {
-      const targetcard = button.closest(".itemimg");
+      console.log(event.target);
+      console.log(button);
+      const selectedcard = button.closest(".card");
+      const img = selectedcard.querySelector(".itemimg");
+      console.log(img);
+      const item = selectedcard.getAttribute("id");
+      const src = img.src;
+      const test = document.querySelector(".test");
       ButtontoitemArray.forEach((button) => {
         button.style.display = "none";
       });
-      const test = document.querySelector(".test");
       test.insertAdjacentHTML(
         "afterbegin",
-        `<img class="itemimg" src="${targetcard}">`
+        `<img class="itemimg" src=${src}>
+        <h1 class="itemname">${item}</h1>
+        <h2></h2>`
       );
     });
   });
