@@ -117,24 +117,48 @@ function Getitemdata() {
   const Buttontoitem = document.querySelectorAll(".Buttontoitem");
   const ButtontoitemArray = Array.from(Buttontoitem);
   ButtontoitemArray.forEach((button) => {
-    button.addEventListener("click", function (event) {
-      console.log(event.target);
-      console.log(button);
+    button.addEventListener("click", async function (event) {
+      //Getting the Item's name
       const selectedcard = button.closest(".card");
-      const img = selectedcard.querySelector(".itemimg");
-      console.log(img);
       const item = selectedcard.getAttribute("id");
-      const src = img.src;
-      const test = document.querySelector(".test");
+      //Getting Api data(Have to do a second fetch call remember?)
+      const api2 = await fetch("https://riskofrain2api.herokuapp.com/api/everyItem");
+      const apidata2 = api2.json();
+      //Using id to get specific data from the api
+      const itemdata = apidata2
+      //Removing Old buttons from the screen
       ButtontoitemArray.forEach((button) => {
         button.style.display = "none";
       });
-      test.insertAdjacentHTML(
-        "afterbegin",
-        `<img class="itemimg" src=${src}>
-        <h1 class="itemname">${item}</h1>
-        <h2></h2>`
-      );
+      //Inserting data and button to return to home page
+      // test.insertAdjacentHTML(
+      // "afterbegin",
+      // `<button class="HomePagebtn">Return?</button>
+      // <img class="itemimg" src=${}>
+      // <h1 class="itemname">${}</h1>
+      // <h2></h2>`
+      // );
+      
+      //While this code does WORK, it's not what we need to do...:
+      //Rubric calls for a second fetch call to get data.
+      // console.log(event.target);
+      // console.log(button);
+      // const selectedcard = button.closest(".card");
+      // const img = selectedcard.querySelector(".itemimg");
+      // console.log(img);
+      // const item = selectedcard.getAttribute("id");
+      // console.log(item);
+      // const src = img.src;
+      // const test = document.querySelector(".test");
+      // ButtontoitemArray.forEach((button) => {
+      //   button.style.display = "none";
+      // });
+      // test.insertAdjacentHTML(
+      //   "afterbegin",
+      //   `<img class="itemimg" src=${src}>
+      //   <h1 class="itemname">${item}</h1>
+      //   <h2></h2>`
+      // );
     });
   });
 }
