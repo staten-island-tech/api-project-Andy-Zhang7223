@@ -64,6 +64,7 @@ function inject(item) {
     "afterbegin",
     `<div class="card" id="${item.itemName}" data-category=${item.color}>
     <button class="Buttontoitem">
+    <h2 class="itemnameoncard">${item.itemName}</h2>
     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
     </button>
     </div>`
@@ -72,7 +73,7 @@ function inject(item) {
 
 apidata.forEach((item) => inject(item));
 
-//The image for Aurrlionite's Blessing is wrong, find a way to fix it(Or at least horribly fail trying to)
+//The image for Aurrlionite's Blessing is wrong, find a way to fix it(Or at least horribly fail trying to)(We failed Horribly doing so good to note!)
 // function correctaurelionitesblessing() {
 //   const wrongimglol = document.querySelector("#Aurelionite's Blessingimg");
 //   if (wrongimglol) {
@@ -112,53 +113,100 @@ apidata.forEach((item) => inject(item));
 
 // filterButtons();
 
+//Searching For specific Items!
+function searching() {
+  const searchbar = document.querySelector(".searchbar")
+  searchbar.addEventListener("input", () => {
+    const searchbarvalue = searchbar.value.toLowerCase();
+    const Buttontoitem = document.querySelectorAll(".Buttontoitem");
+    Buttontoitem.forEach((btn) => {
+      const card = btn.closest(".card");
+      if (!card) return;
+      const itemName = card.id.toLowerCase();
+      if (itemName.includes(searchbarvalue) || searchbarvalue === "") {
+        btn.style.display = "";
+      } else {
+        btn.style.display = "none";
+      }
+    })
+  })
+  }
+
+searching()
+
+//Return to Homepage Button(We are putting it here to run it in the Getitemdata function, yes it's messy shut up.)
+function ReturntoHomePage() {
+  const Returnbtn = document.querySelector(".return")
+  Returnbtn.addEventListener("click", function (event) {
+    const infoimg = document.querySelector(".displayingiteminfoimg");
+    const infoname = document.querySelector(".displayingiteminfoname");
+    const infodescription = document.querySelector(".displayingiteminfodescription");
+    const infostacking = document.querySelector(".displayingiteminfostacking");
+    const inforarity = document.querySelector(".displayingiteminforarity");
+    const infocooldown = document.querySelector(".displayingiteminfocooldown");
+    const Buttontoitem = document.querySelectorAll(".Buttontoitem");
+    const ButtontoitemArray = Array.from(Buttontoitem);
+    ButtontoitemArray.forEach((button) => {
+      button.style.display = "";
+      const searchbar = document.querySelector(".searchbar")
+      searchbar.style.display = "";
+    })
+    infoimg.remove();
+    infoname.remove();
+    infodescription.remove();
+    infostacking.remove();
+    inforarity.remove();
+    infocooldown.remove();
+    Returnbtn.remove();
+  })
+}
+
 //Button Listener to try and pull up data:
 function Getitemdata() {
   const Buttontoitem = document.querySelectorAll(".Buttontoitem");
   const ButtontoitemArray = Array.from(Buttontoitem);
+  const test = document.querySelector(".test")
   ButtontoitemArray.forEach((button) => {
     button.addEventListener("click", async function (event) {
-      //Getting the Item's name
-      const selectedcard = button.closest(".card");
-      const item = selectedcard.getAttribute("id");
-      //Getting Api data(Have to do a second fetch call remember?)
-      const api2 = await fetch("https://riskofrain2api.herokuapp.com/api/everyItem");
-      const apidata2 = api2.json();
-      //Using id to get specific data from the api
-      const itemdata = apidata2
-      //Removing Old buttons from the screen
-      ButtontoitemArray.forEach((button) => {
-        button.style.display = "none";
-      });
-      //Inserting data and button to return to home page
-      // test.insertAdjacentHTML(
-      // "afterbegin",
-      // `<button class="HomePagebtn">Return?</button>
-      // <img class="itemimg" src=${}>
-      // <h1 class="itemname">${}</h1>
-      // <h2></h2>`
-      // );
-      
-      //While this code does WORK, it's not what we need to do...:
-      //Rubric calls for a second fetch call to get data.
-      // console.log(event.target);
-      // console.log(button);
-      // const selectedcard = button.closest(".card");
-      // const img = selectedcard.querySelector(".itemimg");
-      // console.log(img);
-      // const item = selectedcard.getAttribute("id");
-      // console.log(item);
-      // const src = img.src;
-      // const test = document.querySelector(".test");
-      // ButtontoitemArray.forEach((button) => {
-      //   button.style.display = "none";
-      // });
-      // test.insertAdjacentHTML(
-      //   "afterbegin",
-      //   `<img class="itemimg" src=${src}>
-      //   <h1 class="itemname">${item}</h1>
-      //   <h2></h2>`
-      // );
+      ButtontoitemArray.forEach((btn) => {
+        btn.style.display = "none";
+        const searchbar = document.querySelector(".searchbar")
+        searchbar.style.display = "none"
+      })
+      try {
+        const api2 = await fetch("https://riskofrain2api.herokuapp.com/api/everyItem");
+        const apidata2 = await api2.json();
+        const selectedcard = button.closest(".card")
+        const item = selectedcard.getAttribute("id")
+        apidata2.forEach((data) => {
+        if (data.itemName === item) {
+          test.insertAdjacentHTML(
+            "afterbegin",
+            `<button class="return">Return To The Home Page?</button>
+            <img class="displayingiteminfoimg" src=${data.itemImage}>
+            <h1 class="displayingiteminfoname">${data.itemName}</h1>
+            <h1 class="displayingiteminfodescription">${data.description}</h1>
+            <h2 class="displayingiteminfostacking">${data.stackType}</h2>
+            <h2 class="displayingiteminforarity">${data.rarity}</h2>
+            <h3 class="displayingiteminfocooldown">${data.cooldown}</h3>`
+          )
+          ReturntoHomePage()
+        }
+      })
+        if (api2.status != 200) {
+        throw new Error(api2);
+      }
+      }
+      catch (error) {
+        test.insertAdjacentHTML(
+          "afterbegin",
+          `<button class="return">Return To The Home Page?</button>
+          <h1 class="error">There Has Been An Error, Please Refresh the Page, Go Back To The Home Page, or Try Again at Another Time</h1>
+          <h1 class="errorcode"> Error Code: ${error.message}</h1>`
+        )
+        ReturntoHomePage()
+      }
+
     });
   });
 }

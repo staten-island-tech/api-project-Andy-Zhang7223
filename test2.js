@@ -1950,13 +1950,15 @@ const data =
     "itemImage": "https://res.cloudinary.com/morgancrawfordweb/image/upload/v1748136585/64_qf042y.png"
   }
 ]
+
+//Works
 const wanteditem = "His Spiteful Boon"
 
 function getitem() {
 data.forEach((item) => {
     const itemname = item.itemName
     if (wanteditem === itemname) {
-        console.log(item.itemName)
+        console.log(item.itemName, item.color)
     }
 })
 }
