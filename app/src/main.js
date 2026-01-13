@@ -62,7 +62,7 @@ function inject(item) {
   const test = document.querySelector(".test");
   test.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" id="${item.itemName}" data-category=${item.color}>
+    `<div class="card" id="${item.itemName}" data-category=${item.rarity}>
     <button class="Buttontoitem">
     <h2 class="itemnameoncard">${item.itemName}</h2>
     <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
@@ -88,7 +88,6 @@ apidata.forEach((item) => inject(item));
 
 // correctaurelionitesblessing();
 
-//Filtering THIS WASN'T REQUIRED BROOOOO
 // function filter(btncategory) {
 //   const cards = document.querySelectorAll(".card");
 //   cards.forEach((card) => {
@@ -212,3 +211,23 @@ function Getitemdata() {
 }
 
 Getitemdata();
+
+//Filtering
+
+async function filter(btncategory) {
+  const test = document.querySelector(".test")
+    try {
+    const whiteitems = await 
+    if (api.status != 200) {
+      throw new Error(api);
+    }
+  } catch (error) {
+          test.insertAdjacentHTML(
+          "afterbegin",
+          `<button class="return">Return To The Home Page?</button>
+          <h1 class="error">There Has Been An Error, Please Refresh the Page, Go Back To The Home Page, or Try Again at Another Time</h1>
+          <h1 class="errorcode"> Error Code: ${error.message}</h1>`
+        )
+        ReturntoHomePage()
+  }
+}
