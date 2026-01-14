@@ -6,14 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Risk Of Rain 2 Item Database</title>
   </head>
-  <body>
-    <h1 class="Title text-3xl text-red-500 font-bold underline">Welcome to The Risk Of Rain 2 Item Database!</h1>
-    <h2 class="MoreofTitle">Need to know what your items do in one of the best games ever made?</h2>
-    <h2 class="Evenmoreoftitle">NO WORRIES! We got you covered! Click on the item below or look it up!</h2>
+  <body class="bg-stone-950">
+    <h1 class="Title text-center text-3xl text-cyan-500">Welcome to The Risk Of Rain 2 Item Database!</h1>
+    <h2 class="MoreofTitle text-center text-cyan-500">Need to know what your items do in one of the best games ever made?</h2>
+    <h2 class="Evenmoreoftitle text-center text-cyan-500">NO WORRIES! We got you covered! Click on the item below or look it up in the searchbar below!</h2>
     <div class="search">
-      <input class="searchbar" type="text">
+      <input class="searchbar input text-cyan-500 outline outline-blue-600" type="text" placeholder="Type Here!">
     </div>
-    <div class="test"></div>
+    <h2 class="Evenevenmoretitle text-center text-cyan-500">Looking for specific rarities? Here they are!</h2>
+    <div class="rarities flex-wrap justify-items-center">
+      <button class="filterforall btn text-cyan-500 outline outline-blue-600">All</button>
+      <button class="filterforcommon btn text-cyan-500 outline outline-blue-600">Common</button>
+      <button class="filterforuncommon btn text-cyan-500 outline outline-blue-600">Uncommon</button>
+      <button class="filterforlegendary btn text-cyan-500 outline outline-blue-600">Legendary</button>
+      <button class="filterforboss btn text-cyan-500 outline outline-blue-600">Boss</button>
+      <button class="filterforlunar btn text-cyan-500 outline outline-blue-600">Lunar</button>
+      <button class="filterforvoid btn text-cyan-500 outline outline-blue-600">Void</button>
+      <button class="filterforequips btn text-cyan-500 outline outline-blue-600">Equipment</button>
+    </div>
+    <div class="test bg-stone-950"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

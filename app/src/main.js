@@ -62,10 +62,10 @@ function inject(item) {
   const test = document.querySelector(".test");
   test.insertAdjacentHTML(
     "afterbegin",
-    `<div class="card" id="${item.itemName}" data-category=${item.rarity}>
-    <button class="Buttontoitem">
-    <h2 class="itemnameoncard">${item.itemName}</h2>
-    <img class="itemimg" id="${item.itemName}img" src=${item.itemImage}>
+    `<div class="card outline-blue-600 outline m-4 rounded-xl h-15" id="${item.itemName}" data-category=${item.rarity}>
+    <button class="Buttontoitem btn h-15">
+    <h2 class="itemnameoncard text-cyan-500 m-2">${item.itemName}</h2>
+    <img class="itemimg m-3 h-100% w-10%" id="${item.itemName}img" src=${item.itemImage}>
     </button>
     </div>`
   );
@@ -136,7 +136,7 @@ searching()
 //Return to Homepage Button(We are putting it here to run it in the Getitemdata function, yes it's messy shut up.)
 function ReturntoHomePage() {
   const Returnbtn = document.querySelector(".return")
-  Returnbtn.addEventListener("click", function (event) {
+  Returnbtn.addEventListener("click", function () {
     const infoimg = document.querySelector(".displayingiteminfoimg");
     const infoname = document.querySelector(".displayingiteminfoname");
     const infodescription = document.querySelector(".displayingiteminfodescription");
@@ -149,6 +149,11 @@ function ReturntoHomePage() {
       button.style.display = "";
       const searchbar = document.querySelector(".searchbar")
       searchbar.style.display = "";
+        const cards = document.querySelectorAll(".card")
+        const cardsArray = Array.from(cards);
+        cardsArray.forEach((card) => {
+          card.style.display = ""
+        })
     })
     infoimg.remove();
     infoname.remove();
@@ -166,7 +171,12 @@ function Getitemdata() {
   const ButtontoitemArray = Array.from(Buttontoitem);
   const test = document.querySelector(".test")
   ButtontoitemArray.forEach((button) => {
-    button.addEventListener("click", async function (event) {
+    button.addEventListener("click", async function () {
+        const cards = document.querySelectorAll(".card")
+        const cardsArray = Array.from(cards);
+        cardsArray.forEach((card) => {
+          card.style.display = "none"
+        })
       ButtontoitemArray.forEach((btn) => {
         btn.style.display = "none";
         const searchbar = document.querySelector(".searchbar")
@@ -181,13 +191,13 @@ function Getitemdata() {
         if (data.itemName === item) {
           test.insertAdjacentHTML(
             "afterbegin",
-            `<button class="return">Return To The Home Page?</button>
-            <img class="displayingiteminfoimg" src=${data.itemImage}>
-            <h1 class="displayingiteminfoname">${data.itemName}</h1>
-            <h1 class="displayingiteminfodescription">${data.description}</h1>
-            <h2 class="displayingiteminfostacking">${data.stackType}</h2>
-            <h2 class="displayingiteminforarity">${data.rarity}</h2>
-            <h3 class="displayingiteminfocooldown">${data.cooldown}</h3>`
+            `<button class="return btn text-cyan-500 m-2">Return To The Home Page?</button>
+            <img class="displayingiteminfoimg text-cyan-500 m-4" src=${data.itemImage}>
+            <h1 class="displayingiteminfoname text-cyan-500 m-4">Name: ${data.itemName}</h1>
+            <h1 class="displayingiteminfodescription text-cyan-500 m-4">Desciption: ${data.description}</h1>
+            <h2 class="displayingiteminfostacking text-cyan-500 m-4">Stack Type: ${data.stackType}</h2>
+            <h2 class="displayingiteminforarity text-cyan-500 m-4">Rarity: ${data.rarity}</h2>
+            <h3 class="displayingiteminfocooldown text-cyan-500 m-4">Cooldown: ${data.cooldown}</h3>`
           )
           ReturntoHomePage()
         }
@@ -214,14 +224,134 @@ Getitemdata();
 
 //Filtering
 
-async function filter(btncategory) {
-  const test = document.querySelector(".test")
+async function filtering() {
+  const api = await fetch("https://riskofrain2api.herokuapp.com/api/everyitem")
     try {
-    const whiteitems = await 
-    if (api.status != 200) {
-      throw new Error(api);
-    }
+      const whiteitems = await fetch("https://riskofrain2api.herokuapp.com/api/commonitems")
+      const greenitems = await fetch("https://riskofrain2api.herokuapp.com/api/uncommonitems")
+      const reditems = await fetch("https://riskofrain2api.herokuapp.com/api/legendaryitems")
+      const bossitems = await fetch("https://riskofrain2api.herokuapp.com/api/bossitems")
+      const lunaritems = await fetch("https://riskofrain2api.herokuapp.com/api/lunaritems")
+      const voiditems = await fetch("https://riskofrain2api.herokuapp.com/api/voiditems")
+      const equipsitems = await fetch("https://riskofrain2api.herokuapp.com/api/equipmentitems")
+      const filterforall = document.querySelector(".filterforall")
+      filterforall.addEventListener("click", function() {
+        const cards = document.querySelectorAll(".card")
+        const cardsArray = Array.from(cards)
+        cardsArray.forEach((card) => {
+          card.style.display = ""
+        })
+      })
+      const whiteitemsdata = await whiteitems.json();
+      const whiteitemNames = whiteitemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforcommon = document.querySelector(".filterforcommon");
+      filterforcommon.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (whiteitemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      const greenitemsdata = await greenitems.json()
+      const greenitemNames = greenitemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforgreen = document.querySelector(".filterforuncommon");
+      filterforgreen.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (greenitemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      const reditemsdata = await reditems.json()
+      const reditemNames = reditemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforred = document.querySelector(".filterforlegendary");
+      filterforred.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (reditemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      const bossitemsdata = await bossitems.json()
+      const bossitemNames = bossitemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforboss = document.querySelector(".filterforboss");
+      filterforboss.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (bossitemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      const lunaritemsdata = await lunaritems.json()
+      const lunaritemNames = lunaritemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforlunar = document.querySelector(".filterforlunar");
+      filterforlunar.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (lunaritemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      const voiditemsdata = await voiditems.json()
+      const voiditemNames = voiditemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforvoid = document.querySelector(".filterforvoid");
+      filterforvoid.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (voiditemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      const equipsitemsdata = await equipsitems.json()
+      const equipsitemNames = equipsitemsdata.map(item =>
+        item.itemName.toLowerCase()
+      );
+      const filterforequips = document.querySelector(".filterforequips");
+      filterforequips.addEventListener("click", function () {
+        document.querySelectorAll(".card").forEach(card => {
+          const cardid = card.id.toLowerCase();
+          if (equipsitemNames.includes(cardid)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+      if (api.status != 200) {
+        throw new Error(api);
+      }
   } catch (error) {
+          const test = document.querySelector(".test")
           test.insertAdjacentHTML(
           "afterbegin",
           `<button class="return">Return To The Home Page?</button>
@@ -231,3 +361,5 @@ async function filter(btncategory) {
         ReturntoHomePage()
   }
 }
+
+filtering()
